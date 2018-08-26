@@ -1,0 +1,27 @@
+.authentication {
+    padding-top: 100px;
+}
+
+.form-container {
+    max-width: 400px;
+    min-width: 200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #d4d4d5;
+    border-radius: .3em;
+    background: white;
+}
+
+.auth-form {
+    border: 0 !important;
+}
+
+.form-container button {
+    border-radius: .28571429rem !important;
+    z-index: 1000;
+}
+
+.form-container .secondary-button {
+    opacity: 0.5;
+    z-index: 1;
+}

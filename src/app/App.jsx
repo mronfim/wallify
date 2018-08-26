@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Authentication from './pages/Authentication'
+import AuthenticationContainer from './auth/AuthenticationContainer'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Authentication />
+        <AuthenticationContainer />
       </div>
     );
   }
