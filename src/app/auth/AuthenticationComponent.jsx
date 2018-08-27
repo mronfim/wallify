@@ -1,21 +1,26 @@
 import React from 'react';
 import {
     Tab,
-    Loader,
     Dimmer,
-    Segment,
 } from 'semantic-ui-react';
 
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import './styles/authentication.css'
 
-class Authentication extends React.Component {
+class AuthenticationComponent extends React.Component {
     constructor(props) {
         super(props);
+        let activeIndex = (props.login && 0) || (props.register && 1) ;
         this.state = {
-            activeIndex: 0,
+            activeIndex,
         };
+    }
+
+    componentWillMount = () => {
+        if (this.props.isAuthenticated) {
+            this.props.history.push('/');
+        }
     }
 
     handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
@@ -35,12 +40,28 @@ class Authentication extends React.Component {
         this.props.signUp({ email, password, password_confirmation });
     }
 
-    panes = () => [
-        { menuItem: 'Login', render: () => <LoginForm handleSubmit={this.handleLogin}
-            toggleTabChange={this.toggleTabChange} loading={this.props.showSpinner} /> },
-        { menuItem: 'Register', render: () => <RegisterForm handleSubmit={this.handleRegister}
-            toggleTabChange={this.toggleTabChange} loading={this.props.showSpinner} /> },
-    ]
+    panes = () => {
+        const { error } = this.props;
+        const login_error = error && (error.status === 401) && error.msg;
+        const register_error = error && (error.status === 422) && error.msg;
+        
+        return [
+            { menuItem: 'Login', render: () => {
+                return <LoginForm
+                        handleSubmit={this.handleLogin}
+                        toggleTabChange={this.toggleTabChange}
+                        loading={this.props.showSpinner}
+                        error={login_error} />
+            }},
+            { menuItem: 'Register', render: () => {
+                return <RegisterForm
+                        handleSubmit={this.handleRegister}
+                        toggleTabChange={this.toggleTabChange}
+                        loading={this.props.showSpinner}
+                        error={register_error} />
+            }},
+        ];
+    }
 
     render() {
         const { showSpinner } = this.props;
@@ -60,4 +81,4 @@ class Authentication extends React.Component {
     }
 }
 
-export default Authentication;
+export default AuthenticationComponent;

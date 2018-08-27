@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 
-import Authentication from './Authentication';
-import { authOperations } from './duck';
+import AuthenticationComponent from './AuthenticationComponent';
+import { authOperations } from 'reducers/auth';
+import { push } from 'connected-react-router';
 
 const mapStateToProps = (state) => {
     return {
@@ -16,14 +17,18 @@ const mapDispatchToProps = (dispatch) => {
 
     const signUp = ({ email, password, password_confirmation }) => {
         dispatch(authOperations.signUp({ email, password, password_confirmation }));
-    }
+    };
 
-    return { getAuthentication, signUp };
-}
+    const linkTo = link => {
+        push(link);
+    };
 
-const AuthenticationContainer = connect(
+    return { getAuthentication, signUp, linkTo };
+};
+
+const Authentication = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Authentication);
+)(AuthenticationComponent);
 
-export default AuthenticationContainer;
+export default Authentication;

@@ -3,7 +3,9 @@ import types from './types'
 const INITIAL_STATE = {
     isAuthenticated: false,
     showSpinner: false,
+    token: null,
     user: null,
+    error: null,
 };
 
 const authReducer = (state=INITIAL_STATE, action) => {
@@ -12,7 +14,9 @@ const authReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 isAuthenticated: false,
+                token: null,
                 user: null,
+                error: null,
             }
         }
 
@@ -21,7 +25,9 @@ const authReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 isAuthenticated: false,
                 showSpinner: true,
+                token: null,
                 user: null,
+                error: null,
             }
         }
 
@@ -30,7 +36,31 @@ const authReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 isAuthenticated: true,
                 showSpinner: false,
-                user: action.user,
+                token: action.data.jwt,
+                error: null,
+            }
+        }
+
+        case types.REQUEST_CURRENT_USER: {
+            return {
+                ...state
+            }
+        }
+
+        case types.RECEIVE_CURRENT_USER: {
+            return {
+                ...state,
+                user: action.data,
+            }
+        }
+
+        case types.AUTHENTICATION_ERROR: {
+            return {
+                ...state,
+                isAuthenticated: false,
+                showSpinner: false,
+                user: null,
+                error: action.error,
             }
         }
 
