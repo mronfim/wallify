@@ -4,6 +4,7 @@ import {
     Button,
     Form,
     Tab,
+    Message,
 } from 'semantic-ui-react';
 
 class LoginForm extends React.Component {
@@ -24,11 +25,22 @@ class LoginForm extends React.Component {
         this.props.handleSubmit(email, password);
     }
 
+    _renderError = () => {
+        const { error } = this.props;
+
+        if (error) {
+            return (
+                <Message error content={error} />
+            );
+        }
+    }
+
     render() {
         const { loading } = this.props;
         
         return (
             <Tab.Pane className='auth-form'>
+                {this._renderError()}
                 <Form>
                     <Form.Field>
                         <Input 

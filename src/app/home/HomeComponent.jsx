@@ -12,7 +12,7 @@ class HomeComponent extends Component {
     render() {
         return (
             <div className="home">
-                Welcome Matheus
+                Welcome {(this.props.user && this.props.user.email) || ''}
             </div>
         );
     }
